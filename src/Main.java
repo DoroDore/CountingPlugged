@@ -4,15 +4,20 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
-
+    //Driver code
     public static void main(String[] args) {
         readToMap("src/textOne.txt");
     }
+    /**
+     * Read a file and store the words in a map
+     * @param filePath
+     */
     public static void readToMap(String filePath) {
         Map<String, Integer> words = new HashMap<>();
         HashSet<String> commonWords = loadCommonWords("src/commonWords.txt");
         try {
             Scanner scanner = new Scanner(new FileReader(filePath));
+            //Delimiter to split words by punctuation and whitespace
             scanner.useDelimiter("[\\p{Punct}\\s&&[^'’]]+");
             while (scanner.hasNext()) {
                 String word = scanner.next().toLowerCase();
@@ -22,8 +27,15 @@ public class Main {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        //Processes the words once common words and words have been found.
         getTopFive(words, commonWords);
     }
+
+    /**
+     * Load common words from a file into a HashSet
+     * @param filePath
+     * @return
+     */
     public static HashSet<String> loadCommonWords(String filePath) {
         HashSet<String> commonWords = new HashSet<>();
         try {
